@@ -1,8 +1,14 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
       <div class="mx-auto mt-5">
         <h1 class="text-center">Pets</h1>
+        <b-row class="max-auto">
+          <b-button size="sm" class="mr-2" to="/usuario/pets/criar">
+            Adicionar novo pet
+          </b-button>
+        </b-row>
         <b-table striped hover :items="pets" :fields="campos">
             <template #cell(Ações) ="row">
                 <b-button size="sm" class="mr-2" :to="`/usuario/pets/${row.item.id}`"> 
@@ -17,20 +23,20 @@
 
 <script>
 export default {
-    name: 'Pets',
-    data(){
-        return{
-            campos:[
-                'nome', 'dono', 'Ações'
-            ],
-            pets:[
-                {id: 1, nome: 'Ventania', dono: 'Lucas'},
-                {id: 2, nome: 'Bidu', dono: 'Tainá'},
-                {id: 3, nome: 'Totó', dono: 'Joana'},
-                {id: 4, nome: 'Pingo', dono: 'Dora'},                
-            ]     
+  name: 'Pets',
+  data(){
+    return{
+      campos:[
+        'nome', 'dono', 'Ações'
+      ],
+      pets:[
+        {id: 1, nome: 'Ventania', dono: 'Lucas'},
+        {id: 2, nome: 'Bidu', dono: 'Tainá'},
+        {id: 3, nome: 'Totó', dono: 'Joana'},
+        {id: 4, nome: 'Pingo', dono: 'Dora'},                
+      ]     
                 
-        }      
-    }
+    }      
+  }
 }
 </script>

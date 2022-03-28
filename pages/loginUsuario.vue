@@ -10,6 +10,7 @@
               Submit
           </b-button>
       </b-form>
+      <h3> <nuxt-link to="/registroUsuario"> Cadastre-se </nuxt-link> </h3>
     </div>
   </div>
 </template>
