@@ -13,13 +13,8 @@
                 </b-form-input>
             </b-form-group>
 
-            <b-form-group id="group3" label="Telefone:" label-for="input3">
-                <b-form-input id="input3" v-model="form.telefone" placeholder="Insira o seu telefone" required>
-                </b-form-input>
-            </b-form-group>
-
-            <b-form-group id="group4" label="Endereço:" label-for="input4">
-                <b-form-input id="input4" v-model="form.endereco" placeholder="Insira o seu endereço" required>
+            <b-form-group id="group3" label="CRMV:" label-for="input3">
+                <b-form-input id="input3" v-model="form.idCRMV" placeholder="Insira o seu registro CRMV" required>
                 </b-form-input>
             </b-form-group>
 
@@ -39,8 +34,7 @@ export default {
             form:{
                 nome: '',
                 email: '',
-                telefone: '',
-                endereco: ''
+                idCRMV: ''
             }
         }
     },
@@ -50,11 +44,10 @@ export default {
             this.$axios.post("dono/cadastrar/", {
                 nome: this.form.nome,
                 email:  this.form.email,
-                telefone: this.form.telefone,
-                endereco: this.form.endereco
+                idCRMV: this.form.idCRMV
             })
             .then(res =>{
-                this.$router.push("/usuario/pets");
+                this.$router.push("/usuario/consultas");
             })
             .catch(err =>{
                 console.log(err);

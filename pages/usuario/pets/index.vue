@@ -10,9 +10,9 @@
           </b-button>
         </b-row>
         <b-table striped hover :items="pets" :fields="campos">
-            <template #cell(Ações) ="row">
-                <b-button size="sm" class="mr-2" :to="`/usuario/pets/${row.item.id}`"> 
-                    Ver detalhes
+            <template #cell(Ações)="row">
+                <b-button size="sm" class="mr-2" :to="`/usuario/pets/${row.item.idPet}`"> 
+                  Ver detalhes
                 </b-button>
             </template>  
         </b-table>
@@ -27,16 +27,24 @@ export default {
   data(){
     return{
       campos:[
-        'nome', 'dono', 'Ações'
+        {key: 'nome', sortable: true, label: 'Nome'},
+        {key: 'dono.nome', sortable: true, label: 'Dono'},
+        {key: 'Ações', sortable: true, label: 'Ações'},
       ],
-      pets:[
-        {id: 1, nome: 'Ventania', dono: 'Lucas'},
-        {id: 2, nome: 'Bidu', dono: 'Tainá'},
-        {id: 3, nome: 'Totó', dono: 'Joana'},
-        {id: 4, nome: 'Pingo', dono: 'Dora'},                
-      ]     
+      pets:[]     
                 
     }      
+  },
+  mounted(){
+    this.consumirPets()
+  },
+  methods:{
+    consumirPets(){
+      this.$axios.get('pet/buscar/')
+      .then(res =>{
+        this.pets = res.data;
+      })
+    }
   }
 }
 </script>
