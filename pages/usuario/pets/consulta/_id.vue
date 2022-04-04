@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
         <h1 class="text-center"> Consulta</h1>
         <b-form @submit.prevent="onSubmit">
@@ -10,7 +11,7 @@
             </b-form-group>
 
             <b-form-group id="group2" label="Veterinário:" label-for="input2">
-                <b-form-select id="input2" v-model="veterinario" placeholder="Escolha o ID do Veterinário" :options="opcoes" required>
+                <b-form-select id="input2" v-model="veterinario" :options="opcoes" required>
                 </b-form-select>
             </b-form-group>
 
@@ -28,21 +29,46 @@ export default {
     data(){
         return{
             veterinario: null,
+            vet: [],
             form:{
                 data: '',
+                statusConsulta: 0
             },
             opcoes:[
-                {value: null, text: "Escolha um veterinário"},
-                {value: 1, text: "Lucas"},
-                {value: 2, text: "Marcos"},
-                {value: 3, text: "Pedro"}
+                {value: null, text: "Escolha um veterinário"}
             ]
         }
     },
+    mounted(){
+        this.consumirVet()
+    },
     methods:{
+        consumirVet(){
+            this.$axios.get('/veterinario/buscar/')
+            .then(res=>{
+                this.vets = res.data
+                this.vets.forEach((value, index) =>{
+                    this.opcoes.push({
+                        value: value.idPessoa,
+                        text: value.nome
+                    })
+                })
+            })
+        },
         onSubmit(){
             console.log(this.form);
-            this.$router.push("/usuario/pets");
+            console.log(this.veterinario);
+            this.$axios.post("consulta/cadastrar/"+this.veterinario+"/"+this.$route.params.id, {
+                data: this.form.data,
+                statusConsulta: this.form.statusConsulta
+            })
+            .then(res =>{
+                this.$router.push("/usuario/pets");
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+            
         }
     }  
 }

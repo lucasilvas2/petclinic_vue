@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
         <h1 class="text-center"> Insira os dados do seu pet</h1>
         <b-form @submit.prevent="onSubmit">

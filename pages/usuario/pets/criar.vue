@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
         <h1 class="text-center"> Insira os dados do seu pet</h1>
         <b-form @submit.prevent="onSubmit">
@@ -9,7 +10,7 @@
             </b-form-group>
 
             <b-form-group id="group2" label="Aniversario:" label-for="input2">
-                <b-form-input type="date" id="input2" v-model="form.d_niver" placeholder="Insira o aniversário do pet" required>
+                <b-form-input type="date" id="input2" v-model="form.aniversario" placeholder="Insira o aniversário do pet" required>
                 </b-form-input>
             </b-form-group>
 
@@ -33,7 +34,7 @@ export default {
         return{
             form:{
                 nome: '',
-                d_niver: '',
+                aniversario: '',
                 id_dono: null
             },
             options:[
@@ -62,7 +63,7 @@ export default {
             console.log(this.form);
             this.$axios.post('pet/cadastrar/'+this.form.id_dono,{
                 nome: this.form.nome,
-                d_niver: this.form.d_niver
+                aniversario: this.form.aniversario
             })
             .then( res => {
                 this.$router.push('/usuario/pets/');

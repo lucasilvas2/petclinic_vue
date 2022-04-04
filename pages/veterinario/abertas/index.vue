@@ -1,16 +1,16 @@
 <template>
   <div>
-    <HeaderUsuario/>
+    <HeaderConsulta/>
     <div class="container pt-5">
       <div class="mx-auto mt-5">
         <h1 class="text-center">Consultas Abertas</h1>
 
         <b-table striped hover :items="consultas" :fields="campos">
             <template #cell(Ações)="row">
-                <b-button size="sm" class="mr-2" @click="aceitar"> 
+                <b-button size="sm" class="mr-2" @click="aceitarConsultas(row.item)"> 
                     Aceitar
                 </b-button>
-                <b-button size="sm" class="mr-2" @click="recusar"> 
+                <b-button size="sm" class="mr-2" @click="rejeitarConsultas(row.item)"> 
                     Recusar
                 </b-button>
             </template>
@@ -23,20 +23,52 @@
 
 <script>
 export default {
-  name: 'Consultas_abertas',
+  name: 'Consultas',
   data(){
     return{
       campos:[
-        'nome', 'data', 'veterinario','Ações'
+        {key: 'pet.nome', sortable: true, label: 'Nome'},
+        {key: 'data', sortable: true, label: 'Data'},
+        {key: 'veterinario.nome', sortable: true, label: 'Veterinario'},
+        {key: 'Ações', sortable: true, label: 'Ações'},
       ],
-      consultas:[
-        {nome: 'Ventania', data: '20-05-2022', veterinario: 'João'},
-        {nome: 'Bidu', data: '20-05-2022', veterinario: 'Pedro'},
-        {nome: 'Totó', data: '20-05-2022', veterinario: 'Lucas'},
-        {nome: 'Pingo', data: '20-05-2022', veterinario: 'Marcos'},                             
-      ]     
+      consultas:[]     
                 
-    }      
+    }  
+  },
+  mounted(){
+    this.consumirConsultas()
+  },
+  methods:{
+    consumirConsultas(){
+      this.$axios.get('consulta/buscar/')
+      .then(res=>{
+        this.consultas = res.data;
+        this.consultas = this.consultas.filter(c => c.statusConsulta == '0');
+      })
+      .catch(err =>{
+        console.log(err);
+      })
+    },
+    aceitarConsultas(item){
+      
+      this.$axios.post('consulta/aceitar/'+ item.idConsulta)
+      .then(res => {
+        this.consumirConsultas()
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
+    rejeitarConsultas(item){
+      this.$axios.post('consulta/rejeitar/'+ item.idConsulta)
+      .then(res => {
+        this.consumirConsultas()
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
   }
 }
 </script>

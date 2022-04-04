@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
       <b-form @submit.prevent="onSubmit">
           <b-form-group id="group1" label="Email:" label-for="input1">
@@ -28,7 +29,7 @@ export default {
     methods:{
         onSubmit(){
             console.log(this.form);
-            this.$router.push("/usuario/consultas");
+            this.$router.push("/veterinario/abertas/");
         }
     }  
 }

@@ -1,7 +1,8 @@
 <template>
   <div>
+    <HeaderUsuario/>
     <div class="container pt-5">
-        <h1 class="text-center"> Cadastrar usuário</h1>
+        <h1 class="text-center"> Cadastrar Veterinário</h1>
         <b-form @submit.prevent="onSubmit">
             <b-form-group id="group1" label="Nome:" label-for="input1">
                 <b-form-input id="input1" v-model="form.nome" placeholder="Insira o nome do usuario" required>
@@ -41,13 +42,13 @@ export default {
     methods:{
         onSubmit(){
             console.log(this.form);
-            this.$axios.post("dono/cadastrar/", {
+            this.$axios.post("veterinario/cadastrar/", {
                 nome: this.form.nome,
                 email:  this.form.email,
                 idCRMV: this.form.idCRMV
             })
             .then(res =>{
-                this.$router.push("/usuario/consultas");
+                this.$router.push("/veterinario/abertas/");
             })
             .catch(err =>{
                 console.log(err);
